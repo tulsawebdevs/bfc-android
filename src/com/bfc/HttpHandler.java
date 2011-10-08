@@ -20,16 +20,16 @@ import android.util.Log;
 
 public class HttpHandler {
 
-	private static final String QRIMP_COUNT_IMAGES_URL="http://tulsapics.qrimp.com/db.aspx?t=Photos&qid=getPhotosByDistance&lat=%1&long=%2&pagesize=%3&noheader=true&nofooter=true&_pagingInfo=json&vid=JSON";
-	private static final String QRIMP_LIST_URL="http://tulsapics.qrimp.com/db.aspx?t=Photos&qid=getPhotosByDistance&lat=%1&long=%2&pagesize=%3&vid=json&gotopage=%4";
+	private static final String QRIMP_COUNT_IMAGES_URL="tulsapics.qrimp.com/db.aspx?t=Photos&qid=getPhotosByDistance&lat=%1$f&long=%2$f&pagesize=%3$d&noheader=true&nofooter=true&_pagingInfo=json&vid=JSON";
+	private static final String QRIMP_LIST_URL="tulsapics.qrimp.com/db.aspx?t=Photos&qid=getPhotosByDistance&lat=%1$f&long=%2$f&pagesize=%3$d&vid=json&gotopage=%4$d";
 	
 	private static final String IMAGE_URL="https://server16063.contentdm.oclc.org/cgi-bin/getimage.exe?CISOROOT=/p15020coll1&CISOPTR=%1&DMSCALE=100.00000&DMWIDTH=600&DMHEIGHT=600&DMX=152&DMY=0&DMTEXT=&REC=1&DMTHUMB=1&DMROTATE=0";
 	
-	public static String getQrimpCountUrl(double lat, double lng,int pageSize){
+	private static String getQrimpCountUrl(double lat, double lng,int pageSize){
 		return String.format(QRIMP_COUNT_IMAGES_URL, lat,lng,pageSize);
 	}
 	
-	public static String getQrimpListUrl(double lat,double lng,int pageSize,int page){
+	private static String getQrimpListUrl(double lat,double lng,int pageSize,int page){
 		return String.format(QRIMP_LIST_URL, lat,lng,pageSize,page);
 	}
 	
@@ -38,7 +38,7 @@ public class HttpHandler {
 		
 	}*/
 	
-	public JSONObject getPageInfo(double lat,double lng,int pageSize){
+	public static JSONObject getPageInfo(double lat,double lng,int pageSize){
 		String url = getQrimpCountUrl(lat, lng, pageSize);
 		String res = getResponse(url);
 		if(res==null||res.length()==0)
@@ -50,7 +50,7 @@ public class HttpHandler {
 		return jo;
 	}
 	
-	public JSONObject getPage(double lat,double lng,int pageSize,int page){
+	public static JSONObject getPage(double lat,double lng,int pageSize,int page){
 		String url = getQrimpListUrl(lat, lng, pageSize,page);
 		String res = getResponse(url);
 		if(res==null||res.length()==0)
