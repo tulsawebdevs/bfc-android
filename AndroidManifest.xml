@@ -8,9 +8,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	
+<<<<<<< HEAD
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
     <uses-library android:name="com.google.android.maps" />
+=======
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    
+    	<uses-library android:name="com.google.android.maps" />
+    	
+>>>>>>> 481b33e688c774e50e402905c81612e38940d93f
         <activity android:name=".MainActivity"
                   android:label="@string/app_name" android:screenOrientation="portrait">
             <intent-filter>
