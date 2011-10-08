@@ -16,7 +16,6 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         Intent intent;
         
-        
         intent=new Intent().setClass(this,MapViewActivity.class);
         spec=tabHost.newTabSpec("map")
         			.setIndicator("Map")
