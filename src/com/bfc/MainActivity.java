@@ -1,5 +1,6 @@
 package com.bfc;
 
+import android.app.SearchableInfo;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,18 @@ public class MainActivity extends TabActivity {
         intent=new Intent().setClass(this,YouAreHereActivity.class);
         spec=tabHost.newTabSpec("youAreHere")
         			.setIndicator("Here")
+        			.setContent(intent);
+        tabHost.addTab(spec);
+        
+        intent=new Intent().setClass(this,SearchViewActivity.class);
+        spec=tabHost.newTabSpec("search")
+        			.setIndicator("Search")
+        			.setContent(intent);
+        tabHost.addTab(spec);
+        
+        intent=new Intent().setClass(this,AboutActivity.class);
+        spec=tabHost.newTabSpec("about")
+        			.setIndicator("About")
         			.setContent(intent);
         tabHost.addTab(spec);
 
