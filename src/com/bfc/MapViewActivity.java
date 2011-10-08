@@ -1,7 +1,6 @@
 package com.bfc;
 
 import com.google.android.maps.MapActivity;
-
 import android.os.Bundle;
 
 public class MapViewActivity extends MapActivity {

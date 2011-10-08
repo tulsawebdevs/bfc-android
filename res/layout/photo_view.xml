@@ -4,27 +4,40 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-  <LinearLayout
-  	android:orientation="horizontal"
+  <RelativeLayout
   	android:layout_width="match_parent"
   	android:layout_height="wrap_content"
   	android:background="#9E9E9E">
-  	<Button
+  	<ImageButton
+  		android:id="@+id/info"
+  		android:layout_alignParentLeft="true"
+  		android:layout_centerVertical="true"
   		android:layout_width="wrap_content"
   		android:layout_height="wrap_content"
-  		android:text="Back"/>
+  		android:src="@android:drawable/ic_menu_info_details"/>
   	<TextView 
+  		android:layout_centerInParent="true"
   		android:id="@+id/pictureName"
   		android:layout_width="wrap_content"
   		android:layout_height="wrap_content"
   		android:text="Photo Name Here"
   		android:textColor="#FFFFFF"/>
-  </LinearLayout>
-  <TextView
-  	android:id="@+id/pictureInfo"
+  	<ImageButton
+  		android:id="@+id/share"
+  		android:layout_alignParentRight="true"
+  		android:layout_centerVertical="true"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:src="@android:drawable/ic_menu_share"/>
+  </RelativeLayout>
+  <FrameView
   	android:layout_width="match_parent"
   	android:layout_height="match_parent"
-  	android:text="@string/lorem_ipsum"
-  	android:textColor="@android:color/secondary_text_dark_nodisable"/>
-    
+  	>
+  <ImageView
+  	android:id="@+id/picture"
+  	android:layout_width="match_parent"
+  	android:layout_height="match_parent"
+  	/>
+    </FrameView>
 </LinearLayout>

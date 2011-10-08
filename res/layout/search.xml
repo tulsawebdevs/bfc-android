@@ -25,7 +25,8 @@
     		android:layout_height="wrap_content"
     		android:layout_marginTop="5dp"
     		android:paddingLeft="5dp"
-    		android:textSize="25sp"/>
+    		android:textSize="25sp"
+    		android:textColor="#FFFFFF"/>
     </LinearLayout>
     <EditText
     android:hint="Search"

@@ -16,12 +16,12 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         Intent intent;
         
-        /*
+        
         intent=new Intent().setClass(this,MapViewActivity.class);
         spec=tabHost.newTabSpec("map")
         			.setIndicator("Map")
         			.setContent(intent);
-        tabHost.addTab(spec);*/
+        tabHost.addTab(spec);
         
         intent=new Intent().setClass(this,YouAreHereActivity.class);
         spec=tabHost.newTabSpec("youAreHere")

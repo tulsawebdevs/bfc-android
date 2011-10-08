@@ -13,5 +13,7 @@
     <TextView 
     	android:id="@+id/content"
     	android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"/>
+    	android:layout_height="fill_parent"
+    	android:text="@string/lorem_ipsum"
+    	android:textColor="@android:color/secondary_text_dark_nodisable"/>
 </LinearLayout>
