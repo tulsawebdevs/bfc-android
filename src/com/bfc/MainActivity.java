@@ -1,6 +1,5 @@
 package com.bfc;
 
-import android.app.SearchableInfo;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,13 @@ public class MainActivity extends TabActivity {
         TabHost tabHost= getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
+        
+        /*
+        intent=new Intent().setClass(this,MapViewActivity.class);
+        spec=tabHost.newTabSpec("map")
+        			.setIndicator("Map")
+        			.setContent(intent);
+        tabHost.addTab(spec);*/
         
         intent=new Intent().setClass(this,YouAreHereActivity.class);
         spec=tabHost.newTabSpec("youAreHere")
