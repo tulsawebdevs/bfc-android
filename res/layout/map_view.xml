@@ -28,6 +28,7 @@
     		android:textColor="#FFFFFF"/>
     </LinearLayout>
 	<com.google.android.maps.MapView
+	 android:id="@+id/mapview"
 	 android:layout_width="fill_parent"
 	 android:layout_height="fill_parent"
 	 android:enabled="true"
