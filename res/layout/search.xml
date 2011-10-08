@@ -5,7 +5,8 @@
   android:paddingTop="5dp"
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:weightSum="1">
-    <LinearLayout 
+    <LinearLayout
+    	android:background="#9E9E9E" 
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content">
     	<Button
