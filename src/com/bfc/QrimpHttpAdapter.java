@@ -13,6 +13,7 @@ import android.database.DataSetObserver;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -33,10 +34,12 @@ public class QrimpHttpAdapter extends BaseAdapter{
 	
 	private JSONArray[] chachedPages=new JSONArray[NUM_CACHED_PAGES];
 	private int[]   chachedPageNumbers = new int[NUM_CACHED_PAGES];
+	private Handler mHandler;
 	
-	public QrimpHttpAdapter(Context context,double initLat,double initLong){
+	public QrimpHttpAdapter(Handler handler,Context context,double initLat,double initLong){
 		lat=initLat;
 		lng=initLong;
+		mHandler=handler;
 		this.context=context;
 		scheduler.submit(new Runnable(){
 			public void run() {
@@ -46,7 +49,12 @@ public class QrimpHttpAdapter extends BaseAdapter{
 					JSONObject info = ct.getJSONObject("paginationInfo");
 					numPages = info.getInt("numPages");
 					numRecords=info.getInt("numRecords");
-					QrimpHttpAdapter.this.notifyDataSetChanged();
+					mHandler.post(new Runnable() {
+						public void run() {
+							QrimpHttpAdapter.this.notifyDataSetChanged();
+							QrimpHttpAdapter.this.notifyDataSetInvalidated();
+						}
+					});
 				} catch (JSONException e) {}
 			}
 		});
