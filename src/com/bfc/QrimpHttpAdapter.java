@@ -89,7 +89,7 @@ public class QrimpHttpAdapter extends BaseAdapter{
 		}
 		Tag tag;
 		if(convertView==null||convertView.getTag()==null){
-			convertView= View.inflate(context, R.layout.list_object, parent);
+			convertView= View.inflate(context, R.layout.list_object, null);
 			tag = new Tag();
 			convertView.setTag(tag);
 			tag.distance=(TextView) convertView.findViewById(R.id.distance);
