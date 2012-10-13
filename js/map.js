@@ -5,16 +5,16 @@ function loadmap()
 		//alert('itworked');
 		latlong = position.coords.latitude+','+ position.coords.longitude
 		//latlong =google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-		map = $("#map").gmap({'center':latlong, 'zoom':15})
+		map = $("#map").gmap({'center':latlong, 'zoom':15});
+		$('#map').gmap('addMarker', {'position':position.coords.latitude+','+position.coords.longitude});
 	});	
 	db.transaction(function (tx) {
 		tx.executeSql('SELECT * FROM ZPHOTO', [], function (tx, results) {
 	  		var len = results.rows.length, i;
 	  		for (i = 0; i < len; i++) {
-				//var content = results.rows.item(i).ZDESC + "<img src='images/"+results.rows.item(i).ZCONTENTDMNUMBER+".jpg' style='width:100px;height:100px;'></img>"
-	    			$('#map').gmap('addMarker', {'position':results.rows.item(i).ZCOORD_LAT+','+results.rows.item(i).ZCOORD_LONG})//.click(function() {
-                		//	$('#map').gmap('openInfoWindow', { 'content': content }, this);
-        			//}); 
+	    			$('#map').gmap('addMarker', {'position':results.rows.item(i).ZCOORD_LAT+','+results.rows.item(i).ZCOORD_LONG}).click((function(index){return function()  {
+                			$('#map').gmap('openInfoWindow', { 'content': results.rows.item(index).ZDESC + "<img src='images/"+results.rows.item(index).ZCONTENTDMNUMBER+".jpg' style='width:100px;height:100px;'></img>" }, this);
+        			}})(i)); 
 	  		}
 		});
 	});
