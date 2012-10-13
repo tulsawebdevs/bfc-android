@@ -1,13 +1,11 @@
 var jsondata
 $(function() {
-	$.get('./data/myDatabase.sql', function(response) {
-  		// console.log("got db dump!", response);
-		init=false
-  		var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000, function(){init=true});
-		if(init){
-  			processQuery(db, 2, response.split(';\n'), 'myDatabase'); 
-		}
-	});
+  	var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
+	$.ajax('./data/myDatabase.sql', {
+		success:function(response) {
+  			// console.log("got db dump!", response);
+  			processQuery(db, 2, response.split(';\n'), 'myDatabase')}
+		});
 
 });
 function processQuery(db, i, queries, dbname) {
