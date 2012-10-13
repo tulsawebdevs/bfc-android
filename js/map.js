@@ -11,7 +11,10 @@ function loadmap()
 		tx.executeSql('SELECT * FROM ZPHOTO', [], function (tx, results) {
 	  		var len = results.rows.length, i;
 	  		for (i = 0; i < len; i++) {
-	    			$('#map').gmap('addMarker', {'position':results.rows.item(i).ZCOORD_LAT+','+results.rows.item(i).ZCOORD_LONG});
+				var content = results.rows.item(i).ZDESC + "<img src='images/"+results.rows.item(i).ZCONTENTDMNUMBER+".jpg' style='width:100px;height:100px;'></img>"
+	    			$('#map').gmap('addMarker', {'position':results.rows.item(i).ZCOORD_LAT+','+results.rows.item(i).ZCOORD_LONG}).click(function() {
+                			$('#map').gmap('openInfoWindow', { 'content': content }, this);
+        			}); 
 	  		}
 		});
 	});
