@@ -1,5 +1,5 @@
 $(function() {
-	var load=false;
+	var load=true;
   	var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 	db.transaction(function (tx) {
 		tx.executeSql('SELECT Z_VERSION FROM Z_METADATA', [], function (tx, results) {
@@ -8,6 +8,7 @@ $(function() {
 				console.log('works');
 				load=false;
 			}
+
 		});
 	});
 	if(load){
