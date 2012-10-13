@@ -1,25 +1,22 @@
 $(function() {
-	var load=true;
   	var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 	db.transaction(function (tx) {
 		tx.executeSql('SELECT Z_VERSION FROM Z_METADATA', [], function (tx, results) {
 			console.log(results);
 			if(results.rows.length>0){
-				console.log('works');
-				load=false;
+				console.log('already loaded');
 			}
 
-		});
-	});
-	if(load){
-		console.log('loading')
-		$.ajax('./data/myDatabase.sql', {
-			success:function(response) {
-	  			// console.log("got db dump!", response);
-	  			processQuery(db, 2, response.split(';\n'), 'myDatabase')
+		},function(e){
+			console.log('loading')
+			$.ajax('./data/myDatabase.sql', {
+				success:function(response) {
+	  				// console.log("got db dump!", response);
+	  				processQuery(db, 2, response.split(';\n'), 'myDatabase')
 				}
 			});
-	}
+		});
+	});
 });
 function processQuery(db, i, queries, dbname) {
     if(i < queries.length -1) {
