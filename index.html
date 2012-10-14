@@ -32,15 +32,16 @@
         </style>
         <div id="map" ></div>
          <script type="text/javascript">
-          $(document).bind("pageinit",function(){
-            loadmap();
+          $('#map-page').live("pageshow",function(event){
+              $('#map').empty();
+              loadmap();
           });
          </script>
       </div> <!-- /content -->
       <div data-role="navbar" data-position="fixed" data-transition="none">
         <ul>
-        <li><a href="#map-page" data-role="button"  class="ui-btn-active">Map</a></li>
-        <li><a href="#YouAreHere" data-role="button" >You Are Here</a></li>
+        <li><a href="#map-page" data-role="button" class="ui-btn-active">Map</a></li>
+        <li><a href="#YouAreHere" data-role="button" >Near You</a></li>
         <li><a href="#Search" data-role="button" >Search</a></li>
         <li><a href="#about" data-role="button" >About</a></li>
         </ul>
@@ -51,14 +52,17 @@
       </div> <!-- /header -->
       <div data-role="content">
         <script type="text/javascript" language="javascript">
-          populateNearYou('#nearyou-content')
+          $('#YouAreHere').live("pageshow",function(event){
+            $('#nearyou-content').empty();
+            populateNearYou('#nearyou-content');
+          });
         </script>
         <ul id="nearyou-content" data-role="listview"></ul>
       </div> <!-- /content -->
       <div data-role="navbar" data-position="fixed" data-transition="none">
         <ul>
         <li><a href="#map-page" data-role="button" >Map</a></li>
-        <li><a href="#YouAreHere" data-role="button"  class="ui-btn-active">You Are Here</a></li>
+        <li><a href="#YouAreHere" data-role="button"  class="ui-btn-active">Near You</a></li>
         <li><a href="#Search" data-role="button" >Search</a></li>
         <li><a href="#about" data-role="button" >About</a></li>
         </ul>
@@ -80,7 +84,7 @@
       <div data-role="navbar" data-position="fixed" data-transition="none">
         <ul>
         <li><a href="#map-page" data-role="button" >Map</a></li>
-        <li><a href="#YouAreHere" data-role="button" >You Are Here</a></li>
+        <li><a href="#YouAreHere" data-role="button" >Near You</a></li>
         <li><a href="#Search" data-role="button"  class="ui-btn-active">Search</a></li>
         <li><a href="#about" data-role="button" >About</a></li>
         </ul>
@@ -98,7 +102,7 @@
       <div data-role="navbar" data-position="fixed" data-transition="none">
         <ul>
         <li><a href="#map-page" data-role="button" >Map</a></li>
-        <li><a href="#YouAreHere" data-role="button" >You Are Here</a></li>
+        <li><a href="#YouAreHere" data-role="button" >Near You</a></li>
         <li><a href="#Search" data-role="button" >Search</a></li>
         <li><a href="#about" data-role="button" class="ui-btn-active">About</a></li>
         </ul>
