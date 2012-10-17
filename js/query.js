@@ -22,6 +22,11 @@ function placesnear(lat,lng,callback){
       for (i=0;i<len;i++){
         var d = results.rows.item(i);
         d.distance = distance(d.lat,d.lng,lat,lng);
+        if(d.distance<0){
+          d.distance_format = (d.distance*1000).toFixed(1) + "m";
+        }else{
+          d.distance_format = d.distance.toFixed(2) + "km";
+        }
         data.push(d);
         //callback(d);
       }
