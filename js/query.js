@@ -43,17 +43,21 @@ function populateNearYou(tag,imageTag){
         function(data){
           //var i;
           console.log("Length: "+data.length);
-          $.get("listitem.html",function(template) {
-            var t = $.mustache(template,{content:data});
-            $(tag).append(t);
-            $(tag+" ul").listview();
-            $( imageTag ).on({
-              popupbeforeposition: function() {
-                var maxHeight = $( window ).height() - 60 + "px";
-                $( imageTag ).css( "max-height", maxHeight );
-              }
-            });
-          });
+          listViewTemplate(tag,imageTag,data,"listitem.html");
     })
   })
+}
+
+function listViewTemplate(intoTag,imageTag,items,templateUrl){
+  $.get(templateUrl,function(template) {
+    var t = $.mustache(template,{content:items});
+    $(intoTag).append(t);
+    $(intoTag+" ul").listview();
+    $( imageTag ).on({
+      popupbeforeposition: function() {
+        var maxHeight = $( window ).height() - 60 + "px";
+        $( imageTag ).css( "max-height", maxHeight );
+      }
+    });
+  });
 }
