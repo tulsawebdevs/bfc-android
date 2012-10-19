@@ -1,5 +1,5 @@
-// this will become obsolete soon
-$(function() {
+// this is now obsolete, scripts should now use the data variable.
+/*$(function() {
   	var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 	db.transaction(function (tx) {
 		tx.executeSql('SELECT Z_VERSION FROM Z_METADATA', [], function (tx, results) {
@@ -40,3 +40,4 @@ function processQuery(db, i, queries, dbname) {
   }
 }
 
+*/
