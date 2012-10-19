@@ -13,8 +13,8 @@ function distance(lat1,lon1,lat2,lon2) {
 
 
 function placesnear(lat,lng,callback){
-  var db = openDatabase('myDatabase','1.0','myDatabase',10000000);
-  db.transaction(function(tx){
+  //var db = openDatabase('myDatabase','1.0','myDatabase',10000000);
+  /*db.transaction(function(tx){
     tx.executeSql('select ZCONTENTDMNUMBER, ZCOORD_LAT as lat, ZCOORD_LONG as lng, ZTITLE, ZDESC from ZPHOTO',[], 
     function(tx,results){
       var len = results.rows.length,i;
@@ -33,18 +33,32 @@ function placesnear(lat,lng,callback){
       data=_.sortBy(data,function(d){return d.distance;}); 
       callback(data); 
     });
-  });
+  });*/
+  var len = data.length,i;
+  var results=[];
+  for (i=0;i<len;i++){
+    var d = data[i];
+    d.distance = distance(d.LAT,d.LONG,lat,lng);
+    if(d.distance<0){
+      d.distance_format = (d.distance*1000).toFixed(1) + "m";
+    }else{
+      d.distance_format = d.distance.toFixed(2) + "km";
+    }
+    results.push(d);
+  }
+  results=_.sortBy(data,function(d){return d.distance;}); 
+  callback(results); 
 }
 
 function populateNearYou(tag,imageTag){
   navigator.geolocation.getCurrentPosition(
     function(position){
       placesnear(position.coords.latitude,position.coords.longitude,
-        function(data){
+        function(results){
           //var i;
-          console.log("Length: "+data.length);
+          console.log("Length: "+results.length);
           $.get("listitem.html",function(template) {
-            var t = $.mustache(template,{content:data});
+            var t = $.mustache(template,{content:results});
             $(tag).append(t);
             $(tag+" ul").listview();
             $( imageTag ).on({
@@ -56,4 +70,17 @@ function populateNearYou(tag,imageTag){
           });
     })
   })
+}
+$(function(){
+    $( "#photopopup" ).on({
+        popupbeforeposition: resizepopup
+    });
+});
+function popupImage(idNum){
+	$( "#photopopup img" ).attr('src','images/'+idNum+'.jpg');
+	resizepopup()
+}
+function resizepopup() {
+	var maxHeight = $( window ).height() - 60 + "px";
+	$( "#photopopup img" ).css( "max-height", maxHeight );
 }

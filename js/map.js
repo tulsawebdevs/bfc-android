@@ -1,4 +1,4 @@
-//var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
+var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 function loadmap()
 	{
 	navigator.geolocation.getCurrentPosition(function(position) {

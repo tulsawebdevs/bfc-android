@@ -1,5 +1,5 @@
 $(function(){
-	$('#search-form').submit(function(event){
+	/*$('#search-form').submit(function(event){
 		$('#search-results').empty();
 		db.transaction(function (tx) {
 			var query="%"+$('#search-basic').val()+"%";
@@ -16,16 +16,28 @@ $(function(){
 			});
 		});
 		return false;
+	});*/
+	$('#search-form').submit(function(event){
+		$('#search-results').empty();
+		var query=$('#search-basic').val();
+		for (i=0;i<data.length;i++){
+			if( (data[i].VISUAL_DESCRIPTION.search(new RegExp(query, "i"))>0) || (data[i].ADDRESS.search(new RegExp(query, "i"))>0)){
+				$('#search-results').append("<li><a href='#photopopup2' data-rel='popup' onClick='popupImage2("+data[i].CONTENTDM+")'>"+data[i].ADDRESS+" "+data[i].VISUAL_DESCRIPTION+" "+"</a></li>");
+			}
+		}
+		$('#search-results').listview('refresh');
+		return false;
 	});
-	$( "#photopopup" ).on({
-        popupbeforeposition: function() {
-            var maxHeight = $( window ).height() - 60 + "px";
-            $( "#photopopup img" ).css( "max-height", maxHeight );
-        }
+	$( "#photopopup2" ).on({
+        popupbeforeposition: resizepopup2
     });
 });
-function popupImage(idNum){
-	$( "#photopopup img" ).attr('src','images/'+idNum+'.jpg');
+function popupImage2(idNum){
+	$( "#photopopup2 img" ).attr('src','images/'+idNum+'.jpg');
+	resizepopup2()
 }
-
+function resizepopup2() {
+	var maxHeight = $( window ).height() - 60 + "px";
+	$( "#photopopup2 img" ).css( "max-height", maxHeight );
+}
 
