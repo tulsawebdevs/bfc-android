@@ -1,4 +1,4 @@
-var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
+//var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 function loadmap()
 	{
 	navigator.geolocation.getCurrentPosition(function(position) {
@@ -8,7 +8,7 @@ function loadmap()
 		map = $("#map").gmap({'center':latlong, 'zoom':15});
 		$('#map').gmap('addMarker', {'position':position.coords.latitude+','+position.coords.longitude});
 	});	
-	db.transaction(function (tx) {
+	/*db.transaction(function (tx) {
 		tx.executeSql('SELECT * FROM ZPHOTO', [], function (tx, results) {
 	  		var len = results.rows.length, i;
 	  		for (i = 0; i < len; i++) {
@@ -17,5 +17,11 @@ function loadmap()
         			}})(i)); 
 	  		}
 		});
-	});
+	});*/
+	var len = data.length;
+	for (i = 0; i < len; i++) {
+		$('#map').gmap('addMarker', {'position':data[i].LAT+','+data[i].LONG}).click((function(index){return function()  {
+        		$('#map').gmap('openInfoWindow', { 'content': data[index].VISUAL_DESCRIPTION + "<img src='images/"+data[index].CONTENTDM+".jpg' style='width:100px;height:100px;'></img>" }, this);
+        	}})(i)); 
+	}
 }	
