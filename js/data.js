@@ -1,3 +1,4 @@
+// this will become obsolete soon
 $(function() {
   	var db = openDatabase('myDatabase', '1.0', 'myDatabase', 10000000);
 	db.transaction(function (tx) {
