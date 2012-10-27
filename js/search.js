@@ -35,6 +35,7 @@ $(function(){
     }
   });
 });
+
 function popupImage(idNum){
   $( "#photopopup img" ).attr('src','images/'+idNum+'.jpg');
   resizepopup();
@@ -43,5 +44,4 @@ function resizepopup() {
   var maxHeight = $( window ).height() - 60 + "px";
   $( "#photopopup img" ).css( "max-height", maxHeight );
 }
-
 
