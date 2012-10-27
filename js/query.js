@@ -34,8 +34,6 @@ function populateNearYou(tag,imageTag){
     function(position){
       placesnear(position.coords.latitude,position.coords.longitude,
         function(results){
-          //var i;
-          console.log("Length: "+results.length);
           $.get("listitem.html",function(template) {
             var t = $.mustache(template,{content:results});
             $(tag).append(t);
