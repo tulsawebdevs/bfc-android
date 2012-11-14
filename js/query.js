@@ -34,32 +34,30 @@ function populateNearYou(tag,imageTag){
     function(position){
       placesnear(position.coords.latitude,position.coords.longitude,
         function(results){
-          $.get("listitem.html",function(template) {
-            var t = $.mustache(template,{content:results});
-            $(tag).append(t);
-            $(tag+" ul").listview();
-            $( imageTag ).on({
-              popupbeforeposition: function() {
-                var maxHeight = $( window ).height() - 60 + "px";
-                $( imageTag ).css( "max-height", maxHeight );
-              }
-            });
+          var template = $("#listitem-template").text();
+          var t = $.mustache(template,{content:results});
+          $(tag).append(t);
+          $(tag+" ul").listview();
+          $( imageTag ).on({
+            popupbeforeposition: function() {
+              var maxHeight = $( window ).height() - 60 + "px";
+              $( imageTag ).css( "max-height", maxHeight );
+            }
           });
     })
   })
 }
 
 function listViewTemplate(intoTag,imageTag,items,templateUrl){
-  $.get(templateUrl,function(template) {
-    var t = $.mustache(template,{content:items});
-    $(intoTag).append(t);
-    $(intoTag+" ul").listview();
-    $( imageTag ).on({
-      popupbeforeposition: function() {
-        var maxHeight = $( window ).height() - 60 + "px";
-        $( imageTag ).css( "max-height", maxHeight );
-      }
-    });
+  var template = $("#listitem-template").text();
+  var t = $.mustache(template,{content:items});
+  $(intoTag).append(t);
+  $(intoTag+" ul").listview();
+  $( imageTag ).on({
+    popupbeforeposition: function() {
+      var maxHeight = $( window ).height() - 60 + "px";
+      $( imageTag ).css( "max-height", maxHeight );
+    }
   });
 }
 
