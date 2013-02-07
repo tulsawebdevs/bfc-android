@@ -2,33 +2,48 @@ Zepto(function($){
   
   var NavBar = $(".nav");
   
-  var PhotoModel = Backbone.Model.extend({});
+  var PhotoModel = Backbone.Model.extend({
+    calc_distance: function (lat,lng){
+      return distance(this.get("LAT"),this.get("LONG"),lat,lng);
+    },
+    calc_distance_format: function(lat,lng){
+      var d = this.calc_distance(lat,lng);
+      if(d<0){
+        return (d*1000).toFixed(1) + "m";
+      }else {
+        return d.toFixed(2) + "km";
+      }
+    },
+    update_distance: function(lat,lng){
+      //this.set("distance",this.calc_distance(lat,lng));
+      this.set('distance_format',this.calc_distance_format(lat,lng));
+    }
+  });
   
   var PhotoCollection = Backbone.Collection.extend({
     model: PhotoModel,
-    url: '/data/AppData.json',
+    url: 'data/AppData.json',
     initialize: function() {
-      this.fetch();
-      return ;
+      this.fetch();      
       var col = this;
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          col.forEach(function(value) {
-            var d = distance(position.coords.latitude,position.coords.longitude,value.LAT,value.LONG);
-            var d_f;
-            if(d<0){
-              d_f = (d*1000).toFixed(1) + "m";
-            }else{
-              d_f = d.toFixed(2) + "km";
-            }
-            value.set('distance',d);
-            value.set('distance_format',d_f);
-         });
+          col.location = position;
+          col.invoke("update_distance",position.coords.latitude,position.coords.longitude);
       }); 
     }
   });
 
   var photos = new PhotoCollection;
+
+  var ListItemView = Backbone.View.extend({
+    template: Mustache.compile($('#listitem-template').text()),
+    initialize: function() {
+    },
+    render: function() {
+      
+    }
+  });
 
   var NavBackView = Backbone.View.extend({
     hide:function () {
@@ -92,27 +107,42 @@ Zepto(function($){
     },
   });
 
-  var NearYouView = NavBackView.extend({
-    el: $('#nearyou'),
-    nav: NavBar.find('li a[href="#near-you"]').parent(),
-    template: Mustache.compile($('#listitem-template').text()),
-    
+  var ListView = NavBackView.extend({
+    data: [],    
     initialize: function () {
+      var _this = this;
       var onUpdate = function() {
-        if(this.visible)this.render();
+        if(_this.visible){
+          _this.update();
+          _this.render();
+        }
       };
-      photos.on("add",onUpdate,this);
-      photos.on("remove",onUpdate,this);
-      photos.on("reset",onUpdate,this);
-      photos.on("change",onUpdate,this);
+      photos.on("add",onUpdate);
+      photos.on("remove",onUpdate);
+      photos.on("reset",onUpdate);
+      photos.on("change",onUpdate);
     },
-    
+    update :function () {},
     render: function () {
-      this.$el.html(this.template({content:photos.toJSON()}));
+      var d = this.data.toJSON ? this.data.toJSON() : this.data;
+      this.content.html(this.template({content:d}));
     },
   });
+
+  var NearYouView = ListView.extend({
+    el: $('#nearyou'),
+    content: $('#nearyou'),
+    nav: NavBar.find('li a[href="#near-you"]').parent(),
+    template: Mustache.compile($('#listitem-template').text()),
+    data: photos.toJSON(),
+    
+    update: function (){
+      this.data = photos.toJSON();
+      this.render();
+    },    
+  });
   
-  var SearchView = NavBackView.extend({
+  var SearchView = ListView.extend({
     el: $('#search'),
     content: $('#search #content'),
     nav: NavBar.find('li a[href="#search"]').parent(),
@@ -122,16 +152,7 @@ Zepto(function($){
     events: {
       "submit": "search",
     },
-    initialize: function () {
-      var onUpdate = function() {
-        if(this.visible)this.render();
-      };
-      photos.on("add",onUpdate,this);
-      photos.on("remove",onUpdate,this);
-      photos.on("reset",onUpdate,this);
-      photos.on("change",onUpdate,this);
-    },
-    render: function () {
+    update: function() {
       if(this.term){
         var e = decodeURI(this.term);
         this.$("input").val(e);
@@ -142,14 +163,16 @@ Zepto(function($){
              i.get("TAGS").toLowerCase().indexOf(e) != -1;
         });
         sd = _.map(sd,function(i){return i.toJSON();});
-        this.content.html(this.template({content:sd}));
+        this.data = sd;
       } else {
-        this.content.html("");
+        this.data = [];
       }
+      this.render();
     },
     search: function (en) {
       var e = encodeURI(this.$('input').val());
       this.term = e;
+      this.update();
       this.render();
       navigationRouter.navigate("search/"+e,{trigger:false});
     }
